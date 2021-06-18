@@ -3,7 +3,6 @@
 # Table name: posts
 #
 #  id             :bigint           not null, primary key
-#  body           :text
 #  comments_count :integer          default(0)
 #  title          :string
 #  created_at     :datetime         not null
@@ -11,6 +10,8 @@
 #
 class Post < ApplicationRecord
   
+  has_rich_text :body
+
   has_many :comments
 
   validates :body, presence: :true

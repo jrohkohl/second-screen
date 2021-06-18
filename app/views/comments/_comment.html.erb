@@ -4,12 +4,12 @@
     <strong><%= comment.owner.username%></strong>
 
     <p class ="text-muted ml-2">
-      <%= time_ago_in_words(@post.created_at) %> ago
+      <%= time_ago_in_words(comment.created_at) %> ago
     </p>
   </div>
 
   <div>
-    <%= comment.content %>
+    <%= comment.body %>
   </div>
 
   <div class = "d-flex">
@@ -17,14 +17,18 @@
       <i class="far fa-thumbs-up"></i> 0 
     </div>
 
-    <div class ="text-muted ml-2">
-      <i class="fas fa-reply"></i> Reply
+    <div class ="text-muted">
+      <%= link_to "Reply", new_comment_path(), class: "text-muted ml-2" %>
     </div>
 
 
     <p class ="text-muted ml-2">
       Report
     </p>
+
+    <% if current_user == comment.owner %>
+      <%= link_to "Edit", edit_comment_path(comment), class: "text-muted ml-2" %>
+    <% end %>
 
 
   </div>

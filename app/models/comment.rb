@@ -3,7 +3,6 @@
 # Table name: comments
 #
 #  id         :bigint           not null, primary key
-#  body       :text
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #  owner_id   :bigint           not null
@@ -23,7 +22,7 @@
 #  fk_rails_...  (post_id => posts.id)
 #
 class Comment < ApplicationRecord
-  has_rich_text :content
+  has_rich_text :body
   
   belongs_to :post, counter_cache: true
   belongs_to :owner, class_name: "User", counter_cache: true
