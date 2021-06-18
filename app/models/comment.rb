@@ -23,6 +23,17 @@
 #  fk_rails_...  (post_id => posts.id)
 #
 class Comment < ApplicationRecord
-  belongs_to :post
-  belongs_to :owner
+  belongs_to :post, counter_cache: true
+  belongs_to :owner, class_name: "User", counter_cache: true
+  belongs_to :parent, class_name: "Comment", optional: true
+
+  has_many :replies, class_name: "Comment", foreign_key: :parent_id, dependent: :destroy
+
+  validates :body, presence: true
+
+  scope :by_posted_date, -> { order(created_at: :desc) }
+  scope :by_reply_count, -> { order(replies.count :desc) }
+  scope :parent_comments, -> { where(:parent_id => nil) }
+  scope :child_comments, -> { where.not(:parent_id => nil) }
+
 end

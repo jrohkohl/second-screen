@@ -1,0 +1,15 @@
+<div id="<%= dom_id(comment) %>" class="pt-3">
+  
+  <div class = "d-flex">
+    <strong><%= comment.owner.username%></strong>
+
+    <p class ="text-muted ml-2">
+      <%= time_ago_in_words(@post.created_at) %> ago
+    </p>
+  </div>
+
+  <div>
+    <%= comment.body %>
+  </div>
+
+</div>

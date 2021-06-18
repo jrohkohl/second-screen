@@ -23,6 +23,8 @@ class CommentsController < ApplicationController
   def create
     @comment = Comment.new(comment_params)
 
+    @comment.owner_id = current_user.id
+
     respond_to do |format|
       if @comment.save
         format.html { redirect_to @comment, notice: "Comment was successfully created." }
@@ -64,6 +66,6 @@ class CommentsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def comment_params
-      params.require(:comment).permit(:body, :post_id, :owner_id)
+      params.require(:comment).permit(:body, :post_id, :owner_id, :parent_id)
     end
 end
