@@ -23,6 +23,8 @@
 #  fk_rails_...  (post_id => posts.id)
 #
 class Comment < ApplicationRecord
+  has_rich_text :content
+  
   belongs_to :post, counter_cache: true
   belongs_to :owner, class_name: "User", counter_cache: true
   belongs_to :parent, class_name: "Comment", optional: true
