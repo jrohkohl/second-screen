@@ -1,14 +1,12 @@
 <div id="<%= dom_id(comment) %>" class="pt-3">
-  
   <div class = "d-flex">
     <strong><%= comment.owner.username%></strong>
-
     <p class ="text-muted ml-2">
-      <%= time_ago_in_words(comment.created_at) %> ago
+      -   <%= time_ago_in_words(comment.created_at) %> ago
     </p>
   </div>
 
-  <div>
+  <div class = "mb-2">
     <%= comment.body %>
   </div>
 
@@ -18,9 +16,8 @@
     </div>
 
     <div class ="text-muted">
-      <%= link_to "Reply", new_comment_path(), class: "text-muted ml-2" %>
+      <%= link_to "Reply", new_comment_path(:parent_id => comment.id, :post_id => comment.post), class: "text-muted ml-2" %>
     </div>
-
 
     <p class ="text-muted ml-2">
       Report
@@ -28,9 +25,21 @@
 
     <% if current_user == comment.owner %>
       <%= link_to "Edit", edit_comment_path(comment), class: "text-muted ml-2" %>
+
+      <div class = "ml-2">
+        <%= link_to comment, method: :delete, class: "text-muted" do %>
+          <i class="fas fa-trash fa-xs"></i> Delete
+        <%end%>
+
+      </div>
     <% end %>
-
-
   </div>
-
 </div>
+
+<% if comment.replies.present? %>
+  <% comment.replies.by_posted_date.each do |r| %>
+    <div class="ml-3">
+      <%= render "comments/comment", comment: r %>
+    </div>
+  <% end %>
+<% end %>
